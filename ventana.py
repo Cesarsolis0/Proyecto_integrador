@@ -8,7 +8,7 @@ class ventana(QWidget):
         self.inicializarui()
 
     def inicializarui(self):
-        self.setGeometry(100,100,450,250)
+        self.setGeometry(100,100,250,250)
         self.setWindowTitle("Ventana principal")
         self.contenido()
         self.show()
@@ -67,5 +67,3 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = ventana()
     sys.exit(app.exec())
-
-
