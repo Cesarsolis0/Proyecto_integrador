@@ -57,24 +57,6 @@ class VentanaPrincipal(QMainWindow):
         widget.setLayout(grid_layout)
         self.setCentralWidget(widget)
 
-        
-        # HLayout = QHBoxLayout()
-        # HLayout.addWidget(self.combo_box)
-        # HLayout.addWidget(ver_button)
-
-        # HLayout1 = QHBoxLayout()
-        # HLayout1.addWidget(resultados_button)
-        # HLayout1.addWidget(rendimiento_button)
-
-        # Vlayout = QVBoxLayout()
-        # Vlayout.addWidget(cargar_button)
-        # Vlayout.addWidget(texto_label)
-        # Vlayout.addLayout(HLayout)
-        # Vlayout.addWidget(texto2_label)
-        # Vlayout.addLayout(HLayout1)
-        # Vlayout.addWidget(tratamiento_button)
-        # self.setLayout(Vlayout)
-
     def mostrar_ventana_rendimiento(self):
         self.ventana_rendimiento = VentanaRendimiento()
         self.ventana_rendimiento.show()
