@@ -57,7 +57,6 @@ class VentanaPrincipal(QMainWindow):
         self.tratamiento_button.setEnabled(False)
 
 
-
         grid_layout.addWidget(self.cargar_button,0,0,2,2)
         grid_layout.addWidget(texto_label,1,0,3,1)
         grid_layout.addWidget(self.combo_box,2,0,2,1)
