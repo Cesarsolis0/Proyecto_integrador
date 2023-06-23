@@ -1,7 +1,6 @@
 import sys
 from PyQt6.QtWidgets import QWidget , QApplication , QPushButton, QLabel , QComboBox , QMessageBox, QGridLayout, QMainWindow
 from cargar_dataset import cargar_dataset
-from grafico_general import mostrar_grafico_general
 from VentanaRendimiento import *
 from VentanaResultados import *
 
@@ -37,7 +36,6 @@ class VentanaPrincipal(QMainWindow):
         grafico_label = QLabel("Gráfico general")
 
         self.ver_button = QPushButton("Ver gráfico")
-        self.ver_button.clicked.connect(lambda:mostrar_grafico_general(self))
         self.ver_button.setEnabled(False)
 
         texto2_label = QLabel("Analizar datos")
