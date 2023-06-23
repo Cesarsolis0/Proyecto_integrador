@@ -1,8 +1,7 @@
 import sys
-import pandas as pd
 from PyQt6.QtWidgets import QWidget , QApplication , QPushButton, QLabel , QComboBox , QMessageBox, QGridLayout, QMainWindow
-import matplotlib.pyplot as plt
 from cargar_dataset import cargar_dataset
+from grafico_general import mostrar_grafico_general
 from VentanaRendimiento import *
 from VentanaResultados import *
 
@@ -38,9 +37,8 @@ class VentanaPrincipal(QMainWindow):
         grafico_label = QLabel("Gráfico general")
 
         self.ver_button = QPushButton("Ver gráfico")
-        self.ver_button.clicked.connect(self.mostrar_grafico_general)
+        self.ver_button.clicked.connect(lambda:mostrar_grafico_general(self))
         self.ver_button.setEnabled(False)
-
 
         texto2_label = QLabel("Analizar datos")
 
@@ -48,16 +46,12 @@ class VentanaPrincipal(QMainWindow):
         self.resultados_button.clicked.connect(self.mostrar_ventana_resultados)
         self.resultados_button.setEnabled(False)
 
-
         self.rendimiento_button = QPushButton("Ver rendimiento")
         self.rendimiento_button.clicked.connect(self.mostrar_ventana_rendimiento)
         self.rendimiento_button.setEnabled(False)
 
-
         self.tratamiento_button = QPushButton("Recomendar tratamiento")
         self.tratamiento_button.setEnabled(False)
-
-
 
         grid_layout.addWidget(self.cargar_button,0,0,2,2)
         grid_layout.addWidget(texto_label,1,0,3,1)
@@ -69,14 +63,8 @@ class VentanaPrincipal(QMainWindow):
         grid_layout.addWidget(self.rendimiento_button,4,1,2,1)
         grid_layout.addWidget(self.tratamiento_button,5,0,2,1)
 
-
-
         widget.setLayout(grid_layout)
         self.setCentralWidget(widget)
-     
-    def mostrar_grafico_general(self):
-        self.dataset.plot()
-        plt.show()
 
     def mostrar_ventana_rendimiento(self):
         self.ventana_rendimiento = VentanaRendimiento()
@@ -86,8 +74,6 @@ class VentanaPrincipal(QMainWindow):
         self.ventana_resultados = VentanaResultados()
         self.ventana_resultados.show()
         
-
-
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = VentanaPrincipal()
