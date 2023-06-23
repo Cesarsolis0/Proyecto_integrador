@@ -1,8 +1,10 @@
 import sys
-from PyQt6.QtWidgets import QWidget , QApplication , QPushButton , QVBoxLayout , QHBoxLayout , QLabel , QComboBox , QGridLayout, QMainWindow
-from rendimiento import *
+import pandas as pd
+from PyQt6.QtWidgets import QWidget , QApplication , QPushButton, QLabel , QComboBox , QMessageBox, QGridLayout, QMainWindow
+import matplotlib.pyplot as plt
 from cargar_dataset import cargar_dataset
-from grafico_general import mostrar_grafico_general
+from VentanaRendimiento import *
+from VentanaResultados import *
 
 
 class VentanaPrincipal(QMainWindow):
@@ -22,44 +24,67 @@ class VentanaPrincipal(QMainWindow):
         widget = QWidget()
         grid_layout = QGridLayout()
 
-        cargar_button = QPushButton("Cargar dataset")
-        cargar_button.clicked.connect(lambda:cargar_dataset(self)) #lambda es una funcion anonima que recibe el metodo carhar dataset con el fin de no declarar una funcion y ahorrar lineas 
+        self.cargar_button = QPushButton("Cargar dataset",self)
+        self.cargar_button.setFixedSize(335,60)
+        self.cargar_button.clicked.connect(lambda:cargar_dataset(self))
+        
 
         texto_label = QLabel("Variables")
 
         self.combo_box = QComboBox()
         self.combo_box.addItem("Variables")
+        self.combo_box.setEnabled(False)
 
-        ver_button = QPushButton("Ver grafico")
-        ver_button.clicked.connect(lambda:mostrar_grafico_general(self))
+        grafico_label = QLabel("Gráfico general")
+
+        self.ver_button = QPushButton("Ver gráfico")
+        self.ver_button.clicked.connect(self.mostrar_grafico_general)
+        self.ver_button.setEnabled(False)
+
 
         texto2_label = QLabel("Analizar datos")
 
-        resultados_button = QPushButton("Resultados")
-
-        rendimiento_button = QPushButton("Ver rendimiento")
-        rendimiento_button.clicked.connect(self.mostrar_ventana_rendimiento)
-
+        self.resultados_button = QPushButton("Ver análisis")
+        self.resultados_button.clicked.connect(self.mostrar_ventana_resultados)
+        self.resultados_button.setEnabled(False)
 
 
-        tratamiento_button = QPushButton("Recomendar tratamiento")
+        self.rendimiento_button = QPushButton("Ver rendimiento")
+        self.rendimiento_button.clicked.connect(self.mostrar_ventana_rendimiento)
+        self.rendimiento_button.setEnabled(False)
 
-        grid_layout.addWidget(cargar_button,0,0,2,2)
+
+        self.tratamiento_button = QPushButton("Recomendar tratamiento")
+        self.tratamiento_button.setEnabled(False)
+
+
+
+        grid_layout.addWidget(self.cargar_button,0,0,2,2)
         grid_layout.addWidget(texto_label,1,0,3,1)
         grid_layout.addWidget(self.combo_box,2,0,2,1)
-        grid_layout.addWidget(ver_button,2,1,2,1)
-        grid_layout.addWidget(texto2_label,3,0,3,1)
-        grid_layout.addWidget(resultados_button,4,0,2,1)
-        grid_layout.addWidget(rendimiento_button,4,1,2,1)
-        grid_layout.addWidget(tratamiento_button,5,0,2,1)
-        
+        grid_layout.addWidget(grafico_label,1,1,3,1)
+        grid_layout.addWidget(self.ver_button,2,1,2,1)
+        grid_layout.addWidget(texto2_label,3,0,3,2)
+        grid_layout.addWidget(self.resultados_button,4,0,2,1)
+        grid_layout.addWidget(self.rendimiento_button,4,1,2,1)
+        grid_layout.addWidget(self.tratamiento_button,5,0,2,1)
+
+
 
         widget.setLayout(grid_layout)
         self.setCentralWidget(widget)
+     
+    def mostrar_grafico_general(self):
+        self.dataset.plot()
+        plt.show()
 
     def mostrar_ventana_rendimiento(self):
         self.ventana_rendimiento = VentanaRendimiento()
         self.ventana_rendimiento.show()
+
+    def mostrar_ventana_resultados(self):
+        self.ventana_resultados = VentanaResultados()
+        self.ventana_resultados.show()
         
 
 

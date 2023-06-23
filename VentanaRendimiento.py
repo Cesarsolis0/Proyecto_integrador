@@ -1,7 +1,6 @@
-import sys
-from PyQt6.QtWidgets import QMainWindow, QPushButton, QTableWidget, QHeaderView, QWidget, QGridLayout
 
-# Definimos una clase que hereda de QMainWindow
+from PyQt6.QtWidgets import QMainWindow, QTableWidget, QHeaderView, QWidget, QGridLayout
+
 class VentanaRendimiento(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -13,7 +12,7 @@ class VentanaRendimiento(QMainWindow):
 
         widget = QWidget()
         layout = QGridLayout()
-
+        
         #tabla
         self.table = QTableWidget(0, 2) 
 
@@ -27,10 +26,4 @@ class VentanaRendimiento(QMainWindow):
         self.setCentralWidget(widget)
 
 
-# app = QApplication(sys.argv)
 
-# ventana = VentanaRendimiento()
-
-# ventana.show()
-
-# sys.exit(app.exec())
