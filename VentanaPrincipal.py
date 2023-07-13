@@ -4,6 +4,7 @@ from PyQt6.QtWidgets import QWidget , QApplication , QPushButton, QFileDialog , 
 import matplotlib.pyplot as plt
 from VentanaRendimiento import *
 from VentanaResultados import *
+from VentanaAnalisisSintomas import *
 
 
 class VentanaPrincipal(QMainWindow):
@@ -48,12 +49,8 @@ class VentanaPrincipal(QMainWindow):
         self.resultados_button.setEnabled(False)
 
 
-        self.rendimiento_button = QPushButton("Ver rendimiento")
-        self.rendimiento_button.clicked.connect(self.mostrar_ventana_rendimiento)
-        self.rendimiento_button.setEnabled(False)
-
-
-        self.tratamiento_button = QPushButton("Recomendar tratamiento")
+        self.tratamiento_button = QPushButton("Analisis según sintomas")
+        self.tratamiento_button.clicked.connect(self.mostrar_ventana_analisis_sint)
         self.tratamiento_button.setEnabled(False)
 
 
@@ -64,8 +61,8 @@ class VentanaPrincipal(QMainWindow):
         grid_layout.addWidget(self.ver_button,2,1,2,1)
         grid_layout.addWidget(texto2_label,3,0,3,2)
         grid_layout.addWidget(self.resultados_button,4,0,2,1)
-        grid_layout.addWidget(self.rendimiento_button,4,1,2,1)
-        grid_layout.addWidget(self.tratamiento_button,5,0,2,1)
+        grid_layout.addWidget(self.tratamiento_button,4,1,2,1)
+        # grid_layout.addWidget(self.tratamiento_button,5,0,2,1)
 
 
 
@@ -81,7 +78,6 @@ class VentanaPrincipal(QMainWindow):
         if ruta_dataset:
             self.ver_button.setEnabled(True)
             self.resultados_button.setEnabled(True)
-            self.rendimiento_button.setEnabled(True)
             self.tratamiento_button.setEnabled(True)
             self.combo_box.setEnabled(True)
 
@@ -105,7 +101,10 @@ class VentanaPrincipal(QMainWindow):
     def mostrar_ventana_resultados(self):
         self.ventana_resultados = VentanaResultados()
         self.ventana_resultados.show()
-        
+    
+    def mostrar_ventana_analisis_sint(self):
+        self.ventana_analisis_sint = VentanaAnalisisSintomas()
+        self.ventana_analisis_sint.show()
 
 
 if __name__ == "__main__":
