@@ -17,7 +17,7 @@ class VentanaPrincipal(QMainWindow):
         self.dataset_tratado = None
 
     def inicializarui(self):
-        self.setFixedSize(350,350)
+        self.setFixedSize(350,400)
         self.setWindowTitle("Ventana principal")
         self.contenido()
         self.show()
@@ -43,6 +43,11 @@ class VentanaPrincipal(QMainWindow):
         self.variables_filtradas_combo_box.addItem("Variables")
         self.variables_filtradas_combo_box.setEnabled(False)
 
+        self.nulos_label = QLabel("Cantidad de Nulos:")
+        self.nulos_Age_label = QLabel("Cantidad de Nulos edad:")
+        self.nulos_genero_label = QLabel("Cantidad de Nulos genero:")
+        self.nulos_sintomas_label = QLabel("Cantidad de Nulos sintomas iniciales:")
+
 
         texto2_label = QLabel("Analizar datos")
 
@@ -55,15 +60,18 @@ class VentanaPrincipal(QMainWindow):
         self.tratamiento_button.clicked.connect(self.mostrar_ventana_analisis_sint)
         self.tratamiento_button.setEnabled(False)
 
-
         grid_layout.addWidget(self.cargar_button,0,0,2,2)
         grid_layout.addWidget(texto_label,1,0,3,1)
         grid_layout.addWidget(self.combo_box,2,0,2,1)
         grid_layout.addWidget(variables_filtradas_label,1,1,3,1)
         grid_layout.addWidget(self.variables_filtradas_combo_box,2,1,2,1)
-        grid_layout.addWidget(texto2_label,3,0,3,2)
-        grid_layout.addWidget(self.resultados_button,4,0,2,1)
-        grid_layout.addWidget(self.tratamiento_button,4,1,2,1)
+        grid_layout.addWidget(self.nulos_label,3,0,3,2)
+        grid_layout.addWidget(self.nulos_Age_label,4,0,3,2)
+        grid_layout.addWidget(self.nulos_genero_label,5,0,3,2)
+        grid_layout.addWidget(self.nulos_sintomas_label,6,0,3,2)
+        grid_layout.addWidget(texto2_label,7,0,3,2)
+        grid_layout.addWidget(self.resultados_button,8,0,2,1)
+        grid_layout.addWidget(self.tratamiento_button,8,1,2,1)
         # grid_layout.addWidget(self.tratamiento_button,5,0,2,1)
 
         widget.setLayout(grid_layout)
@@ -91,24 +99,24 @@ class VentanaPrincipal(QMainWindow):
             self.variables_filtradas_combo_box.clear()
             for columna in self.dataset_tratado.columns:
                 self.variables_filtradas_combo_box.addItem(columna)
+            
+            self.nulos_label.setText(f"Cantidad de Nulos: {cantidad_nulos(self.dataset_tratado)}")
+            self.nulos_Age_label.setText(f"Cantidad de Nulos en Edad: {cantidad_nulos(self.dataset_tratado, 'Age')}")
+            self.nulos_genero_label.setText(f"Cantidad de Nulos genero: {cantidad_nulos(self.dataset_tratado, 'Gender')}")
+            self.nulos_sintomas_label.setText(f"Cantidad de Nulos sintomas iniciales: {cantidad_nulos(self.dataset_tratado, 'Initial_Symptom')}")
 
         else:
             QMessageBox.warning(self,"Error","No se ha seleccionado ningun dataset",QMessageBox.StandardButton.Close,QMessageBox.StandardButton.Close)
-            
-      
-    # def mostrar_grafico_general(self):
-    #     self.dataset.plot()
-    #     plt.show()
         
-
     def mostrar_ventana_resultados(self):
-        self.ventana_resultados = VentanaResultados()
+        self.ventana_resultados = VentanaResultados(self.dataset_tratado)
         self.ventana_resultados.show()
         
-
     def mostrar_ventana_analisis_sint(self):
         self.ventana_analisis_sint = VentanaAnalisisSintomas()
         self.ventana_analisis_sint.show()
+
+
 
 
 if __name__ == "__main__":

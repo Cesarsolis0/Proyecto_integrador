@@ -6,13 +6,12 @@ import time
 from VentanaRendimiento import *
 
 
-
 class VentanaResultados(QMainWindow):
 
-    def __init__(self):
+    def __init__(self, data):
         super().__init__()
 
-        self.dataset = pd.read_csv('dataset_esclerosis.csv')
+        self.dataset = data
 
         self.setWindowTitle('Ver análisis')
 

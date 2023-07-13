@@ -6,7 +6,7 @@ import pandas as pd
 def eliminar_columnas_innecesarias(dataset):
 
     # Obtener los nombres de las columnas a eliminar
-    columnas_a_eliminar = ['Schooling','Breastfeeding', 'Varicella', 'Mono_or_Polysymptomatic', 'Oligoclonal_Bands', 'LLSSEP', 'ULSSEP', 'VEP', 'BAEP', 'Periventricular_MRI', 'Cortical_MRI', 'Infratentorial_MRI', 'Spinal_Cord_MRI', 'Initial_EDSS', 'Final_EDSS', 'group']
+    columnas_a_eliminar = ['Id','Schooling','Breastfeeding', 'Varicella', 'Mono_or_Polysymptomatic', 'Oligoclonal_Bands', 'LLSSEP', 'ULSSEP', 'VEP', 'BAEP', 'Periventricular_MRI', 'Cortical_MRI', 'Infratentorial_MRI', 'Spinal_Cord_MRI', 'Initial_EDSS', 'Final_EDSS', 'group']
 
     # Eliminar las columnas del DataFrame
     dataset = dataset.drop(columnas_a_eliminar, axis=1)
@@ -14,8 +14,8 @@ def eliminar_columnas_innecesarias(dataset):
     return dataset
 
 def cantidad_nulos(dataset, columna=None):
-    data = eliminar_columnas_innecesarias(dataset)
-    if columna != None:
+    data = dataset
+    if columna == None:
         nulos = data.isnull()
         cantidad_nulos = nulos.sum()
         total_nulos = cantidad_nulos.sum()

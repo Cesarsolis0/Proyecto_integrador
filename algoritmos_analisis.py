@@ -3,8 +3,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-data = pd.read_csv('dataset_esclerosis.csv')
-
 #Calcular porcentajes de mujeres y hombres con la enfermedad (uso de listas)
 
 def porcentaje_genero_enfermedad(data, genero_str):
@@ -69,9 +67,9 @@ def porcentaje_sintomas_iniciales(data):
 def mostrar_edades(data):
     #selecionamos todas las filas del dataset,y la tercera columna con el index 2 para obtener la informacion 
     # de la tercera columna y guardarla en una tupla
-    tercera_columna = tuple(data.iloc[:, 2])
+    tercera_columna = tuple(data['Age'])
 
-    numdepersonas = len(tercera_columna)
+    numdepersonas = len(data['Age'])
 
     # Calcular la edad menor, mayor y media
     edad_menor = min(tercera_columna)
