@@ -7,6 +7,7 @@ from VentanaResultados import *
 
 
 class VentanaPrincipal(QMainWindow):
+    
     def __init__(self):
         super().__init__()
         self.inicializarui()
