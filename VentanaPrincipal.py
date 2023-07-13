@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from VentanaRendimiento import *
 from VentanaResultados import *
 from VentanaAnalisisSintomas import *
+from tratamiento_dataset import *
 
 
 class VentanaPrincipal(QMainWindow):
@@ -12,7 +13,8 @@ class VentanaPrincipal(QMainWindow):
     def __init__(self):
         super().__init__()
         self.inicializarui()
-        self.dataset = None
+        self.dataset_original = None
+        self.dataset_tratado = None
 
     def inicializarui(self):
         self.setFixedSize(350,350)
@@ -30,17 +32,16 @@ class VentanaPrincipal(QMainWindow):
         self.cargar_button.clicked.connect(self.cargar_dataset)
         
 
-        texto_label = QLabel("Variables")
+        texto_label = QLabel("Todas las Variables")
 
         self.combo_box = QComboBox()
         self.combo_box.addItem("Variables")
         self.combo_box.setEnabled(False)
 
-        grafico_label = QLabel("Gráfico general")
-
-        self.ver_button = QPushButton("Ver gráfico")
-        self.ver_button.clicked.connect(self.mostrar_grafico_general)
-        self.ver_button.setEnabled(False)
+        variables_filtradas_label = QLabel("variables filtradas")
+        self.variables_filtradas_combo_box = QComboBox()
+        self.variables_filtradas_combo_box.addItem("Variables")
+        self.variables_filtradas_combo_box.setEnabled(False)
 
 
         texto2_label = QLabel("Analizar datos")
@@ -58,14 +59,12 @@ class VentanaPrincipal(QMainWindow):
         grid_layout.addWidget(self.cargar_button,0,0,2,2)
         grid_layout.addWidget(texto_label,1,0,3,1)
         grid_layout.addWidget(self.combo_box,2,0,2,1)
-        grid_layout.addWidget(grafico_label,1,1,3,1)
-        grid_layout.addWidget(self.ver_button,2,1,2,1)
+        grid_layout.addWidget(variables_filtradas_label,1,1,3,1)
+        grid_layout.addWidget(self.variables_filtradas_combo_box,2,1,2,1)
         grid_layout.addWidget(texto2_label,3,0,3,2)
         grid_layout.addWidget(self.resultados_button,4,0,2,1)
         grid_layout.addWidget(self.tratamiento_button,4,1,2,1)
         # grid_layout.addWidget(self.tratamiento_button,5,0,2,1)
-
-
 
         widget.setLayout(grid_layout)
         self.setCentralWidget(widget)
@@ -77,32 +76,36 @@ class VentanaPrincipal(QMainWindow):
         # ,_ desempaqueta la tupla y solo asigna la ruta del archivo a la variable 
 
         if ruta_dataset:
-            self.ver_button.setEnabled(True)
+            self.variables_filtradas_combo_box.setEnabled(True)
             self.resultados_button.setEnabled(True)
             self.tratamiento_button.setEnabled(True)
             self.combo_box.setEnabled(True)
 
         if ruta_dataset:
-            self.dataset = pd.read_csv(ruta_dataset)
+            self.dataset_original = pd.read_csv(ruta_dataset)
             self.combo_box.clear()  #elimina los datos ingresados para añadir los nuevos
-            for columna in self.dataset.columns:
+            for columna in self.dataset_original.columns:
                 self.combo_box.addItem(columna)
+
+            self.dataset_tratado = eliminar_columnas_innecesarias(self.dataset_original)
+            self.variables_filtradas_combo_box.clear()
+            for columna in self.dataset_tratado.columns:
+                self.variables_filtradas_combo_box.addItem(columna)
+
         else:
             QMessageBox.warning(self,"Error","No se ha seleccionado ningun dataset",QMessageBox.StandardButton.Close,QMessageBox.StandardButton.Close)
             
       
-    def mostrar_grafico_general(self):
-        self.dataset.plot()
-        plt.show()
-
-    def mostrar_ventana_rendimiento(self):
-        self.ventana_rendimiento = VentanaRendimiento()
-        self.ventana_rendimiento.show()
+    # def mostrar_grafico_general(self):
+    #     self.dataset.plot()
+    #     plt.show()
+        
 
     def mostrar_ventana_resultados(self):
         self.ventana_resultados = VentanaResultados()
         self.ventana_resultados.show()
-    
+        
+
     def mostrar_ventana_analisis_sint(self):
         self.ventana_analisis_sint = VentanaAnalisisSintomas()
         self.ventana_analisis_sint.show()

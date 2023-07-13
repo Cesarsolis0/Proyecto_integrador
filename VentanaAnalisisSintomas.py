@@ -1,4 +1,5 @@
 from PyQt6.QtWidgets import QMainWindow, QWidget, QGridLayout, QCheckBox, QLabel, QPushButton, QComboBox
+from tratamiento_dataset import *
 
 class VentanaAnalisisSintomas(QMainWindow):
     def __init__(self):
@@ -28,16 +29,13 @@ class VentanaAnalisisSintomas(QMainWindow):
         checkbox4 = QCheckBox('Otro')
         layout.addWidget(checkbox4, 6,0)
 
-        ver_analisis_button = QPushButton('Aceptar')
+        ver_analisis_button = QPushButton('Ver analisis')
         layout.addWidget(ver_analisis_button, 7,0)
 
 
         aceptar_button = QPushButton('Aceptar')
-        layout.addWidget(aceptar_button, 7,0)
+        layout.addWidget(aceptar_button, 8,0)
         aceptar_button.clicked.connect(self.close)
-
-        
-
 
         widget.setLayout(layout)
         self.setCentralWidget(widget)
